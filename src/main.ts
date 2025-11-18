@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { RequestInterceptors } from './common/interceptors/request.interceptor';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,21 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   app.useGlobalInterceptors(new ResponseInterceptor(), new RequestInterceptors);
+  
+  app.useGlobalPipes(new ValidationPipe({
+  whitelist: true,
+  forbidNonWhitelisted: true,
+  transform: true,
+  exceptionFactory: (errors) => {
+    return new BadRequestException(
+      errors.map(err => ({
+        field: err.property,
+        constraints: err.constraints,
+      }))
+    );
+  }
+}));
+
 
   await app.listen(3000);
 }

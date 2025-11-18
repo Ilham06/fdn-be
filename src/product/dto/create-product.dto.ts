@@ -1,6 +1,7 @@
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsNumber, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsUniqueProductName } from 'src/common/validator/isUniqueProduct';
 
 class RatingInput {
   @ApiPropertyOptional()
@@ -18,6 +19,7 @@ export class CreateProductDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @IsUniqueProductName()
   name!: string;
 
   @ApiProperty()

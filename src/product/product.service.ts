@@ -149,7 +149,7 @@ export class ProductService {
 
     return {
       ...updated,
-      rating: dto.rating ?? (await this.mysql.rating.findUnique({ where: { productId } as any })),
+      rating: dto.rating ?? (await this.mysql.rating.findFirst({ where: { productId } as any })),
     };
   }
 
