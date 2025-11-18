@@ -1,14 +1,15 @@
 // prisma/ratings.prisma
 
+generator ratingsClient {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/ratings"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL_MYSQL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-  output   = "../src/prisma/generated/ratings"
-}
 
 model Rating {
   id         String   @id @default(uuid())
