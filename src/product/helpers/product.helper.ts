@@ -5,7 +5,7 @@ export class ProductHelper {
   constructor(private readonly pg: PrismaProductsService) {}
 
   async ensureExist(productId: number) {
-    const product = await this.pg.product.findUnique({ where: { productId } } as any);
+    const product = await this.pg.product.findUnique({ where: { productId } });
     if (!product) throw new NotFoundException('Product not found');
     return product;
   }

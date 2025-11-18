@@ -95,7 +95,7 @@ export class ProductService {
 
     return this.pg.$transaction(async (pgTx) => {
       const product = await pgTx.product.create({
-        data: { name: dto.name, price: dto.price } as any,
+        data: { name: dto.name, price: dto.price },
       });
 
       if (dto.rating) {
@@ -120,7 +120,7 @@ export class ProductService {
     await this.productHelper.validateNameOnUpdate(dto.name!, product.name);
     return this.pg.$transaction(async (pgTx) => {
       const updated = await pgTx.product.update({
-        where: { productId } as any,
+        where: { productId },
         data: {
           name: dto.name ?? product.name,
           price: dto.price ?? product.price,
@@ -164,7 +164,7 @@ export class ProductService {
 
     return this.pg.$transaction(async (pgTx) => {
       const deleted = await pgTx.product.update({
-        where: { productId } as any,
+        where: { productId },
         data: { deletedAt: new Date() },
       });
 
