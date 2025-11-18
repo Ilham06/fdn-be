@@ -1,0 +1,21 @@
+// prisma/products.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_POSTGRES")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/prisma/generated/products"
+}
+
+model Product {
+  id        String    @id @default(uuid())
+  productId Int
+  name      String    @unique
+  price     Decimal
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}

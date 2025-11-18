@@ -1,0 +1,21 @@
+// prisma/ratings.prisma
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_MYSQL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/prisma/generated/ratings"
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  productId  Int
+  rate       Decimal
+  count      Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  deletedAt  DateTime?
+}
