@@ -12,7 +12,7 @@ datasource db {
 
 model Product {
   id         String   @id @default(uuid())
-  productId  Int
+  productId  Int       @default(autoincrement()) @unique
   name       String   @unique
   price      Decimal
   createdAt  DateTime @default(now())

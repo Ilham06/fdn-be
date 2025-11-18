@@ -7,9 +7,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@prisma-products": ["node_modules/.prisma/products/client/index"],
-      "@prisma-ratings": ["node_modules/.prisma/ratings/client/index"]
-    },
+    "@products-prisma/*": ["node_modules/.prisma/products/*"]
+  },
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,

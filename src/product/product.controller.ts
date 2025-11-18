@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Headers } fro
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ApiSecurity } from '@nestjs/swagger';
+import { PaginationQueryDto } from 'src/common/dto/pagination.dto';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Get('fetch')
   fetch() {
@@ -18,25 +20,25 @@ export class ProductController {
   }
 
   @Get()
-  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
-    return this.productService.findAll(+page, +limit);
-  }
+findAll(@Query() query: PaginationQueryDto) {
+  return this.productService.findAll(query);
+}
+
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(id);
+  findOne(@Param('id') id: number) {
+    return this.productService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(id, updateProductDto);
+  update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
+    return this.productService.update(+id, updateProductDto);
   }
 
+  @ApiSecurity('custom-auth')
   @Delete(':id')
-  remove(
-    @Param('id') id: string,
-    @Headers('authorization') auth: string,
-  ) {
-    return this.productService.remove(id, auth);
+  remove(@Param('id') id: number) {
+    return this.productService.remove(+id);
   }
+
 }
