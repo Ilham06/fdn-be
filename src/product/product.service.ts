@@ -67,7 +67,7 @@ export class ProductService {
 
   async findOne(productId: number) {
     const product = await this.pg.product.findFirst({
-      where: { productId: productId },
+      where: { productId: productId,deletedAt: null },
     });
 
     if (!product) throw new NotFoundException('Product not found');
